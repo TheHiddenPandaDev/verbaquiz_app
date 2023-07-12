@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:verbaquiz/domain/exceptions/malformed_map_exception.dart';
 
-import 'answer.dart';
+import 'package:verbaquiz/domain/model/objects/answer.dart';
 
 class Question extends Equatable {
   final int id;

@@ -1,8 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:verbaquiz/application.dart";
-
-import 'injection.dart';
+import 'package:verbaquiz/injection.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,6 +1,15 @@
 include: package:flutter_lints/flutter.yaml
 
+analyzer:
+  exclude: [
+    lib/injection.config.dart,
+    test/**.mocks.dart
+  ]
+
 linter:
   rules:
-    lines_longer_than_80_chars
-    unnecessary_lambdas
+    - always_declare_return_types
+    - always_require_non_null_named_parameters
+    - always_use_package_imports
+    - annotate_overrides
+    - avoid_bool_literals_in_conditional_expressions
