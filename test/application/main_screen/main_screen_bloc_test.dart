@@ -6,7 +6,7 @@ import 'package:mockito/mockito.dart';
 import 'package:verbaquiz/application/bloc/main_screen/main_screen_bloc.dart';
 import 'package:verbaquiz/domain/model/objects/answer.dart';
 import 'package:verbaquiz/domain/model/objects/question.dart';
-import 'package:verbaquiz/domain/services/question_service.dart';
+import 'package:verbaquiz/domain/services/ui/question_service.dart';
 
 import 'main_screen_bloc_test.mocks.dart';
 

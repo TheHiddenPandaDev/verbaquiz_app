@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:verbaquiz/ui/screens/onboarding_screen/onboarding_screen.dart';
+import 'package:verbaquiz/ui/screens/splash_screen/splash_screen.dart';
 
 void main() {
-  group('Onboarding Test', () {
+  group('Splash Screen Test', () {
     testWidgets('Pump and test widget', (WidgetTester tester) async {
 
       await tester.pumpWidget(
         const MaterialApp(
-          home: OnboardingScreen(),
+          home: SplashScreen(),
         ),
       );
 
-      expect(find.image(const AssetImage('assets/onboarding_screen/verbaquiz_logo.png')), findsOneWidget);
+      expect(find.image(const AssetImage('assets/splash_screen/verbaquiz_logo.png')), findsOneWidget);
 
       Finder textFinder = find.text('TheHiddenPanda');
       expect(textFinder, findsOneWidget);
@@ -22,7 +22,7 @@ void main() {
 
       await expectLater(
         find.byType(MaterialApp),
-        matchesGoldenFile('../../goldens/onboarding_screen.png'),
+        matchesGoldenFile('../../goldens/splash_screen.png'),
       );
     });
   });
