@@ -1,4 +1,4 @@
-part of '../onboarding_screen.dart';
+part of '../splash_screen.dart';
 
 class TheHiddenPandaLogo extends StatelessWidget {
   const TheHiddenPandaLogo({

@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:verbaquiz/domain/model/objects/question.dart';
-import 'package:verbaquiz/domain/services/question_service.dart';
+import 'package:verbaquiz/domain/services/ui/question_service.dart';
 
 part 'main_screen_event.dart';
 part 'main_screen_state.dart';

@@ -1,4 +1,4 @@
-part of '../onboarding_screen.dart';
+part of '../splash_screen.dart';
 
 class VerbaQuizLogo extends StatelessWidget {
   const VerbaQuizLogo({
@@ -8,7 +8,7 @@ class VerbaQuizLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      'assets/onboarding_screen/verbaquiz_logo.png',
+      'assets/splash_screen/verbaquiz_logo.png',
       width: 120,
     );
   }
