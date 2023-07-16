@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
-
   static const String routeName = '/home';
 
   const HomeScreen({
@@ -15,7 +14,9 @@ class HomeScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Home')
+          Center(
+            child: Text('Home'),
+          ),
         ],
       ),
     );
