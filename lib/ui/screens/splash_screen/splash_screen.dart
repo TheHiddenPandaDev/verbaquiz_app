@@ -20,8 +20,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final SplashScreenBloc _splashScreenBloc =
-      GetIt.instance.get<SplashScreenBloc>();
+  final SplashScreenBloc _splashScreenBloc = GetIt.instance.get<SplashScreenBloc>();
 
   @override
   void initState() {

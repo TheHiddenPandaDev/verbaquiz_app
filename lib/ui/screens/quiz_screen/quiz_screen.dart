@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:verbaquiz/application/bloc/quiz_screen/quiz_screen_bloc.dart';
 
 class QuizScreen extends StatefulWidget {
   static const String routeName = '/Quiz';
@@ -12,6 +15,9 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
+
+  final QuizScreenBloc _quizScreenBloc = GetIt.instance.get<QuizScreenBloc>();
+
   @override
   void initState() {
     super.initState();
@@ -62,13 +68,25 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Center(
-            child: Text('Quiz'),
+          BlocBuilder<QuizScreenBloc, QuizScreenState>(
+            bloc: _quizScreenBloc,
+            builder: (context, state) {
+              if(state is QuizScreenInitial) {
+                _quizScreenBloc.add(const QuizScreenEventLoadQuiz());
+                return const Center(
+                  child: Text('Loading...'),
+                );
+              }
+              return const Center(
+                child: Text('Quiz'),
+              );
+
+            },
           ),
         ],
       ),
