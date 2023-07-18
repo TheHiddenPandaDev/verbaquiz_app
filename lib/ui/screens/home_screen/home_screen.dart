@@ -21,7 +21,11 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(height: 50),
           TextButton(
             onPressed: () => Navigator.of(context).pushNamed(QuizScreen.routeName),
-            child: const Text('Go To Quiz'),
+            child: const Text('Quiz con timer'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pushNamed(QuizScreen.routeName),
+            child: const Text('Quiz sin timer'),
           ),
         ],
       ),

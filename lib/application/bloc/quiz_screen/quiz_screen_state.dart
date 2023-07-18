@@ -12,17 +12,16 @@ class QuizScreenInitial extends QuizScreenState {
   List<Object> get props => [];
 }
 
-class QuizScreenQuizLoading extends QuizScreenInitial {
+class QuizScreenQuizLoading extends QuizScreenState {
   const QuizScreenQuizLoading();
+
+  @override
+  List<Object> get props => [];
 }
 
 class QuizScreenQuizLoaded extends QuizScreenState {
-  final Quiz quiz;
-
-  const QuizScreenQuizLoaded({
-    required this.quiz,
-  });
+  const QuizScreenQuizLoaded();
 
   @override
-  List<Object> get props => [quiz];
+  List<Object> get props => [];
 }

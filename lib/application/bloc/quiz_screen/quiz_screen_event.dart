@@ -10,3 +10,7 @@ abstract class QuizScreenEvent extends Equatable {
 class QuizScreenEventLoadQuiz extends QuizScreenEvent {
   const QuizScreenEventLoadQuiz();
 }
+
+class QuizScreenEventLoadNextQuestion extends QuizScreenEvent {
+  const QuizScreenEventLoadNextQuestion();
+}
