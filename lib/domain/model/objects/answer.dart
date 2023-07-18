@@ -22,7 +22,9 @@ class Answer extends Equatable {
       };
 
   factory Answer.fromMap(Map<String, dynamic> map) {
-    if (map['id'] is! int || map['text'] is! String) throw MalformedAnswerMapException(map);
+    if (map['id'] is! int || map['text'] is! String) {
+      throw MalformedAnswerMapException(map);
+    }
 
     return Answer(
       id: map['id'],

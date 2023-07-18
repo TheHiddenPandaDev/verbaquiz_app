@@ -1,10 +1,8 @@
-import 'package:injectable/injectable.dart';
 import 'package:verbaquiz/domain/model/objects/answer.dart';
 import 'package:verbaquiz/domain/model/objects/question.dart';
 import 'package:verbaquiz/domain/model/objects/quiz.dart';
 import 'package:verbaquiz/domain/repositories/quiz_repository.dart';
 
-@Injectable(as: QuizRepository)
 class HttpQuizRepository implements QuizRepository {
   HttpQuizRepository();
 

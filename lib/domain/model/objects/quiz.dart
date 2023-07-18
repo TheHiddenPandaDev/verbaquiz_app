@@ -24,13 +24,19 @@ class Quiz extends Equatable {
       };
 
   factory Quiz.fromMap(Map<String, dynamic> map) {
-    if (map['id'] is! int || map['questions'] is! List<Question>) {
+    if (map['id'] is! int || map['questions'] is! List) {
       throw MalformedQuizMapException(map);
+    }
+
+    List<Question> questions = [];
+
+    for (Map<String, dynamic> question in map['questions']){
+      questions.add(Question.fromMap(question));
     }
 
     return Quiz(
       id: map['id'],
-      questions: map['questions'],
+      questions: questions,
     );
   }
 }

@@ -22,7 +22,7 @@ import 'domain/services/ui/quiz_service.dart' as _i10;
 import 'domain/services/ui/splash_service.dart' as _i11;
 import 'infrastructure/repositories/question/http_question_repository.dart'
     as _i6;
-import 'infrastructure/repositories/quiz/http_quiz_repository.dart' as _i9;
+import 'infrastructure/repositories/quiz/mock_quiz_repository.dart' as _i9;
 import 'infrastructure/services/http_service.dart' as _i4;
 
 // ignore_for_file: unnecessary_lambdas
@@ -42,7 +42,7 @@ _i1.GetIt $initGetIt(
   gh.factory<_i5.QuestionApiRepository>(
       () => _i6.HttpQuestionRepository(gh<_i3.HttpService>()));
   gh.lazySingleton<_i7.QuestionBloc>(() => _i7.QuestionBloc());
-  gh.factory<_i8.QuizRepository>(() => _i9.HttpQuizRepository());
+  gh.factory<_i8.QuizRepository>(() => _i9.MockQuizRepository());
   gh.factory<_i10.QuizService>(
       () => _i10.QuizService(gh<_i8.QuizRepository>()));
   gh.factory<_i11.SplashService>(() => _i11.SplashService());
