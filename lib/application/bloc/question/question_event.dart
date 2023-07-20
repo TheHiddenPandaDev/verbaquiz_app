@@ -21,8 +21,8 @@ class LoadQuestion extends QuestionScreenEvent {
 }
 
 class LoadCorrectAnswer extends QuestionScreenEvent {
-  final Answer answerSelected;
+  final Answer? answerSelected;
   const LoadCorrectAnswer({
-    required this.answerSelected,
+    this.answerSelected,
   });
 }

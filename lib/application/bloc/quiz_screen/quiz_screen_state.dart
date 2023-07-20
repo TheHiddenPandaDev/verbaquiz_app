@@ -12,16 +12,21 @@ class QuizScreenInitial extends QuizScreenState {
   List<Object> get props => [];
 }
 
-class QuizScreenQuizLoading extends QuizScreenState {
-  const QuizScreenQuizLoading();
+class QuizScreenStarted extends QuizScreenState {
+  const QuizScreenStarted();
 
   @override
   List<Object> get props => [];
 }
 
-class QuizScreenQuizLoaded extends QuizScreenState {
-  const QuizScreenQuizLoaded();
+class QuizScreenQuizLoading extends QuizScreenStarted {
+  const QuizScreenQuizLoading();
+}
 
-  @override
-  List<Object> get props => [];
+class QuizScreenQuizLoaded extends QuizScreenStarted {
+  const QuizScreenQuizLoaded();
+}
+
+class QuizScreenQuizFinished extends QuizScreenStarted   {
+  const QuizScreenQuizFinished();
 }

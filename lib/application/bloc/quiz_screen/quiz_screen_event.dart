@@ -14,3 +14,7 @@ class QuizScreenEventLoadQuiz extends QuizScreenEvent {
 class QuizScreenEventLoadNextQuestion extends QuizScreenEvent {
   const QuizScreenEventLoadNextQuestion();
 }
+
+class QuizScreenEventResetQuiz extends QuizScreenEvent {
+  const QuizScreenEventResetQuiz();
+}

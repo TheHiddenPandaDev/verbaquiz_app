@@ -68,6 +68,7 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _quizScreenBloc.add(const QuizScreenEventResetQuiz());
     super.dispose();
   }
 
@@ -125,13 +126,7 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
                                     onStart: () {
                                       debugPrint('Countdown Started');
                                     },
-                                    onComplete: () {
-                                      _questionBloc.add(
-                                        LoadCorrectAnswer(
-                                          answerSelected: questionState.question.answers[1],
-                                        ),
-                                      );
-                                    },
+                                    onComplete: () => _questionBloc.add(const LoadCorrectAnswer()),
                                     onChange: (String timeStamp) {
                                       debugPrint('Countdown Changed $timeStamp');
                                     },
@@ -144,6 +139,11 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
                                     },
                                   )
                                 : const SizedBox.shrink(),
+                          ),
+                          const SizedBox(height: 50),
+                          Center(
+                            child: Text(
+                                '${_quizScreenBloc.currentQuestion + 1} / ${_quizScreenBloc.quiz?.questions.length}'),
                           ),
                           const SizedBox(height: 50),
                           Center(
@@ -187,25 +187,29 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
                             },
                           ),
                           const SizedBox(height: 50),
-                          TextButton(
-                            onPressed: () {
-                              _quizScreenBloc.add(const QuizScreenEventLoadNextQuestion());
-                              _controller.reset();
-                              _controller.start();
-                            },
-                            child: const Text('Go Next'),
-                          ),
+                          questionState is CorrectQuestionLoaded
+                              ? TextButton(
+                                  onPressed: () {
+                                    _quizScreenBloc.add(const QuizScreenEventLoadNextQuestion());
+                                    _controller.reset();
+                                    _controller.start();
+                                  },
+                                  child: const Text('Go Next'),
+                                )
+                              : const SizedBox.shrink(),
                         ],
                       );
                     }
                     return const SizedBox.shrink();
                   },
                 );
+              } else if (quizScreenState is QuizScreenQuizFinished) {
+                return const Center(
+                  child: Text('Finished?'),
+                );
               }
 
-              return const Center(
-                child: Text('Finished?'),
-              );
+              return const SizedBox.shrink();
             },
           ),
         ],

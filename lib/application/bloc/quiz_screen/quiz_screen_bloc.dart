@@ -22,6 +22,16 @@ class QuizScreenBloc extends Bloc<QuizScreenEvent, QuizScreenState> {
   ) : super(const QuizScreenInitial()) {
     on<QuizScreenEventLoadQuiz>(_handleLoadQuiz);
     on<QuizScreenEventLoadNextQuestion>(_handleGetNextQuestion);
+    on<QuizScreenEventResetQuiz>(_handleGetResetQuiz);
+  }
+
+  void _handleGetResetQuiz(
+    QuizScreenEventResetQuiz event,
+    Emitter<QuizScreenState> emit,
+  ) {
+    quiz = null;
+    currentQuestion = -1;
+    emit(const QuizScreenInitial());
   }
 
   Future<void> _handleLoadQuiz(
@@ -51,8 +61,9 @@ class QuizScreenBloc extends Bloc<QuizScreenEvent, QuizScreenState> {
       currentQuestion++;
       _questionBloc.add(LoadQuestion(question: quiz!.questions[currentQuestion]));
       emit(const QuizScreenQuizLoaded());
+      return;
     }
 
-    // emit Game Finished
+    emit(const QuizScreenQuizFinished());
   }
 }

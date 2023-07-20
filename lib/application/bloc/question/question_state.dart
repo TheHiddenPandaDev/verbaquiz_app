@@ -27,23 +27,23 @@ class QuestionLoaded extends QuestionState {
   });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         question,
       ];
 }
 
 class CorrectQuestionLoaded extends QuestionLoaded {
   final Answer correctAnswer;
-  final Answer answerSelected;
+  final Answer? answerSelected;
 
   const CorrectQuestionLoaded({
     required super.question,
     required this.correctAnswer,
-    required this.answerSelected,
+    this.answerSelected,
   });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         question,
         correctAnswer,
         answerSelected,
