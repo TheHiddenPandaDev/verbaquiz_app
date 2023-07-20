@@ -11,6 +11,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: const SizedBox.shrink(),
+        title: const Text('Quiz'),
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -20,7 +24,12 @@ class HomeScreen extends StatelessWidget {
           ),
           const SizedBox(height: 50),
           TextButton(
-            onPressed: () => Navigator.of(context).pushNamed(QuizScreen.routeName),
+            onPressed: () => Navigator.of(context).pushNamed(
+              QuizScreen.routeName,
+              arguments: const QuizScreenArguments(
+                hasTimer: true,
+              ),
+            ),
             child: const Text('Quiz con timer'),
           ),
           TextButton(

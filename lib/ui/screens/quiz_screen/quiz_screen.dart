@@ -25,6 +25,7 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addObserver(this);
     if (WidgetsBinding.instance.lifecycleState != null) {
       switch (WidgetsBinding.instance.lifecycleState!) {
@@ -72,7 +73,16 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    final QuizScreenArguments? arguments = ModalRoute.of(context)?.settings.arguments as QuizScreenArguments?;
+
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(false),
+        ),
+        title: const Text('Quiz'),
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -93,45 +103,47 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
                       return Column(
                         children: [
                           Center(
-                            child: CircularCountDownTimer(
-                              duration: 10,
-                              initialDuration: 1,
-                              controller: _controller,
-                              width: 150,
-                              height: 150,
-                              ringColor: Colors.grey[300]!,
-                              ringGradient: null,
-                              fillColor: Colors.purpleAccent[100]!,
-                              fillGradient: null,
-                              backgroundColor: Colors.purple[500],
-                              backgroundGradient: null,
-                              strokeWidth: 10.0,
-                              strokeCap: StrokeCap.round,
-                              isReverse: false,
-                              isReverseAnimation: false,
-                              isTimerTextShown: true,
-                              autoStart: true,
-                              onStart: () {
-                                debugPrint('Countdown Started');
-                              },
-                              onComplete: () {
-                                _questionBloc.add(
-                                  LoadCorrectAnswer(
-                                    answerSelected: questionState.question.answers[1],
-                                  ),
-                                );
-                              },
-                              onChange: (String timeStamp) {
-                                debugPrint('Countdown Changed $timeStamp');
-                              },
-                              timeFormatterFunction: (defaultFormatterFunction, duration) {
-                                if (duration.inSeconds == 0) {
-                                  return "Start";
-                                } else {
-                                  return Function.apply(defaultFormatterFunction, [duration]);
-                                }
-                              },
-                            ),
+                            child: arguments != null && arguments.hasTimer
+                                ? CircularCountDownTimer(
+                                    duration: 10,
+                                    initialDuration: 1,
+                                    controller: _controller,
+                                    width: 150,
+                                    height: 150,
+                                    ringColor: Colors.grey[300]!,
+                                    ringGradient: null,
+                                    fillColor: Colors.purpleAccent[100]!,
+                                    fillGradient: null,
+                                    backgroundColor: Colors.purple[500],
+                                    backgroundGradient: null,
+                                    strokeWidth: 10.0,
+                                    strokeCap: StrokeCap.round,
+                                    isReverse: false,
+                                    isReverseAnimation: false,
+                                    isTimerTextShown: true,
+                                    autoStart: true,
+                                    onStart: () {
+                                      debugPrint('Countdown Started');
+                                    },
+                                    onComplete: () {
+                                      _questionBloc.add(
+                                        LoadCorrectAnswer(
+                                          answerSelected: questionState.question.answers[1],
+                                        ),
+                                      );
+                                    },
+                                    onChange: (String timeStamp) {
+                                      debugPrint('Countdown Changed $timeStamp');
+                                    },
+                                    timeFormatterFunction: (defaultFormatterFunction, duration) {
+                                      if (duration.inSeconds == 0) {
+                                        return "Start";
+                                      } else {
+                                        return Function.apply(defaultFormatterFunction, [duration]);
+                                      }
+                                    },
+                                  )
+                                : const SizedBox.shrink(),
                           ),
                           const SizedBox(height: 50),
                           Center(
@@ -200,4 +212,12 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
       ),
     );
   }
+}
+
+class QuizScreenArguments {
+  final bool hasTimer;
+
+  const QuizScreenArguments({
+    this.hasTimer = false,
+  });
 }
