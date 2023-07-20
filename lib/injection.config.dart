@@ -12,17 +12,14 @@
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
-import 'application/bloc/question/question_bloc.dart' as _i7;
-import 'application/bloc/quiz_screen/quiz_screen_bloc.dart' as _i12;
-import 'application/bloc/splash_screen/splash_screen_bloc.dart' as _i13;
-import 'domain/repositories/question_api_repository.dart' as _i5;
-import 'domain/repositories/quiz_repository.dart' as _i8;
+import 'application/bloc/question/question_bloc.dart' as _i5;
+import 'application/bloc/quiz_screen/quiz_screen_bloc.dart' as _i10;
+import 'application/bloc/splash_screen/splash_screen_bloc.dart' as _i11;
+import 'domain/repositories/quiz_repository.dart' as _i6;
 import 'domain/services/http_service.dart' as _i3;
-import 'domain/services/ui/quiz_service.dart' as _i10;
-import 'domain/services/ui/splash_service.dart' as _i11;
-import 'infrastructure/repositories/question/http_question_repository.dart'
-    as _i6;
-import 'infrastructure/repositories/quiz/mock_quiz_repository.dart' as _i9;
+import 'domain/services/ui/quiz_service.dart' as _i8;
+import 'domain/services/ui/splash_service.dart' as _i9;
+import 'infrastructure/repositories/quiz/mock_quiz_repository.dart' as _i7;
 import 'infrastructure/services/http_service.dart' as _i4;
 
 // ignore_for_file: unnecessary_lambdas
@@ -39,18 +36,15 @@ _i1.GetIt $initGetIt(
     environmentFilter,
   );
   gh.factory<_i3.HttpService>(() => _i4.FlutterHttpService());
-  gh.factory<_i5.QuestionApiRepository>(
-      () => _i6.HttpQuestionRepository(gh<_i3.HttpService>()));
-  gh.lazySingleton<_i7.QuestionBloc>(() => _i7.QuestionBloc());
-  gh.factory<_i8.QuizRepository>(() => _i9.MockQuizRepository());
-  gh.factory<_i10.QuizService>(
-      () => _i10.QuizService(gh<_i8.QuizRepository>()));
-  gh.factory<_i11.SplashService>(() => _i11.SplashService());
-  gh.lazySingleton<_i12.QuizScreenBloc>(() => _i12.QuizScreenBloc(
-        gh<_i10.QuizService>(),
-        gh<_i7.QuestionBloc>(),
+  gh.lazySingleton<_i5.QuestionBloc>(() => _i5.QuestionBloc());
+  gh.factory<_i6.QuizRepository>(() => _i7.MockQuizRepository());
+  gh.factory<_i8.QuizService>(() => _i8.QuizService(gh<_i6.QuizRepository>()));
+  gh.factory<_i9.SplashService>(() => _i9.SplashService());
+  gh.lazySingleton<_i10.QuizScreenBloc>(() => _i10.QuizScreenBloc(
+        gh<_i8.QuizService>(),
+        gh<_i5.QuestionBloc>(),
       ));
-  gh.lazySingleton<_i13.SplashScreenBloc>(
-      () => _i13.SplashScreenBloc(gh<_i11.SplashService>()));
+  gh.lazySingleton<_i11.SplashScreenBloc>(
+      () => _i11.SplashScreenBloc(gh<_i9.SplashService>()));
   return getIt;
 }
