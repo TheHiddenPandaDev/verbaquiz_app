@@ -32,13 +32,24 @@ class Question extends Equatable {
       };
 
   factory Question.fromMap(Map<String, dynamic> map) {
-    if (map['id'] is! int || map['text'] is! String || map['answers'] is! List<Answer>) throw MalformedQuestionMapException(map);
+    if (map['id'] is! int ||
+        map['text'] is! String ||
+        map['answers'] is! List ||
+        map['correct_answer'] is! Map<String, dynamic>) {
+      throw MalformedQuestionMapException(map);
+    }
+
+    List<Answer> answers = [];
+
+    for (Map<String, dynamic> answer in map['answers']){
+      answers.add(Answer.fromMap(answer));
+    }
 
     return Question(
       id: map['id'],
       text: map['text'],
-      answers: map['answers'],
-      correctAnswer: map['correctAnswer'],
+      answers: answers,
+      correctAnswer: Answer.fromMap(map['correct_answer']),
     );
   }
 }
