@@ -1,3 +1,4 @@
+import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -18,6 +19,8 @@ class QuizScreen extends StatefulWidget {
 class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
   final QuizScreenBloc _quizScreenBloc = GetIt.instance.get<QuizScreenBloc>();
   final QuestionBloc _questionBloc = GetIt.instance.get<QuestionBloc>();
+
+  final CountDownController _controller = CountDownController();
 
   @override
   void initState() {
@@ -77,7 +80,7 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
           BlocBuilder<QuizScreenBloc, QuizScreenState>(
             bloc: _quizScreenBloc,
             builder: (context, quizScreenState) {
-              if(quizScreenState is QuizScreenInitial){
+              if (quizScreenState is QuizScreenInitial) {
                 _quizScreenBloc.add(const QuizScreenEventLoadQuiz());
                 return const Center(
                   child: Text('Loading...'),
@@ -89,6 +92,48 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
                     if (questionState is QuestionLoaded) {
                       return Column(
                         children: [
+                          Center(
+                            child: CircularCountDownTimer(
+                              duration: 10,
+                              initialDuration: 1,
+                              controller: _controller,
+                              width: 150,
+                              height: 150,
+                              ringColor: Colors.grey[300]!,
+                              ringGradient: null,
+                              fillColor: Colors.purpleAccent[100]!,
+                              fillGradient: null,
+                              backgroundColor: Colors.purple[500],
+                              backgroundGradient: null,
+                              strokeWidth: 10.0,
+                              strokeCap: StrokeCap.round,
+                              isReverse: false,
+                              isReverseAnimation: false,
+                              isTimerTextShown: true,
+                              autoStart: true,
+                              onStart: () {
+                                debugPrint('Countdown Started');
+                              },
+                              onComplete: () {
+                                _questionBloc.add(
+                                  LoadCorrectAnswer(
+                                    answerSelected: questionState.question.answers[1],
+                                  ),
+                                );
+                              },
+                              onChange: (String timeStamp) {
+                                debugPrint('Countdown Changed $timeStamp');
+                              },
+                              timeFormatterFunction: (defaultFormatterFunction, duration) {
+                                if (duration.inSeconds == 0) {
+                                  return "Start";
+                                } else {
+                                  return Function.apply(defaultFormatterFunction, [duration]);
+                                }
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: 50),
                           Center(
                             child: Text(questionState.question.text),
                           ),
@@ -112,6 +157,7 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
                               } else {
                                 return TextButton(
                                   onPressed: () {
+                                    _controller.pause();
                                     _questionBloc.add(
                                       LoadCorrectAnswer(
                                         answerSelected: questionState.question.answers[i],
@@ -130,7 +176,11 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
                           ),
                           const SizedBox(height: 50),
                           TextButton(
-                            onPressed: () => _quizScreenBloc.add(const QuizScreenEventLoadNextQuestion()),
+                            onPressed: () {
+                              _quizScreenBloc.add(const QuizScreenEventLoadNextQuestion());
+                              _controller.reset();
+                              _controller.start();
+                            },
                             child: const Text('Go Next'),
                           ),
                         ],
@@ -144,7 +194,6 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
               return const Center(
                 child: Text('Finished?'),
               );
-
             },
           ),
         ],
