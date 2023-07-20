@@ -103,7 +103,7 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
                       return Column(
                         children: [
                           Center(
-                            child: arguments != null && arguments.hasTimer
+                            child: arguments != null && arguments.hasCountdown
                                 ? CircularCountDownTimer(
                                     duration: 10,
                                     initialDuration: 1,
@@ -215,9 +215,9 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
 }
 
 class QuizScreenArguments {
-  final bool hasTimer;
+  final bool hasCountdown;
 
   const QuizScreenArguments({
-    this.hasTimer = false,
+    this.hasCountdown = false,
   });
 }
