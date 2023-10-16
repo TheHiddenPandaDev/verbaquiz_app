@@ -19,7 +19,7 @@ import 'domain/repositories/quiz_repository.dart' as _i6;
 import 'domain/services/http_service.dart' as _i3;
 import 'domain/services/ui/quiz_service.dart' as _i8;
 import 'domain/services/ui/splash_service.dart' as _i9;
-import 'infrastructure/repositories/quiz/mock_quiz_repository.dart' as _i7;
+import 'infrastructure/repositories/quiz/memory_quiz_repository.dart' as _i7;
 import 'infrastructure/services/http_service.dart' as _i4;
 
 // ignore_for_file: unnecessary_lambdas
@@ -37,7 +37,7 @@ _i1.GetIt $initGetIt(
   );
   gh.factory<_i3.HttpService>(() => _i4.FlutterHttpService());
   gh.lazySingleton<_i5.QuestionBloc>(() => _i5.QuestionBloc());
-  gh.factory<_i6.QuizRepository>(() => _i7.MockQuizRepository());
+  gh.factory<_i6.QuizRepository>(() => _i7.MemoryQuizRepository());
   gh.factory<_i8.QuizService>(() => _i8.QuizService(gh<_i6.QuizRepository>()));
   gh.factory<_i9.SplashService>(() => _i9.SplashService());
   gh.lazySingleton<_i10.QuizScreenBloc>(() => _i10.QuizScreenBloc(

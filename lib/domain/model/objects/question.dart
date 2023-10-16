@@ -8,12 +8,14 @@ class Question extends Equatable {
   final String text;
   final List<Answer> answers;
   final Answer correctAnswer;
+  final Answer? userAnswer;
 
   const Question({
     required this.id,
     required this.text,
     required this.answers,
     required this.correctAnswer,
+    this.userAnswer,
   });
 
   @override
@@ -22,6 +24,7 @@ class Question extends Equatable {
         text,
         answers,
         correctAnswer,
+        userAnswer,
       ];
 
   Map<String, dynamic> toMap() => {
@@ -29,6 +32,7 @@ class Question extends Equatable {
         'text': text,
         'answers': answers,
         'correctAnswer': correctAnswer,
+        'userAnswer': userAnswer,
       };
 
   factory Question.fromMap(Map<String, dynamic> map) {
@@ -50,6 +54,7 @@ class Question extends Equatable {
       text: map['text'],
       answers: answers,
       correctAnswer: Answer.fromMap(map['correct_answer']),
+      userAnswer: Answer.fromMap(map['userAnswer']),
     );
   }
 }

@@ -4,6 +4,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:verbaquiz/application/bloc/question/question_bloc.dart';
 import 'package:verbaquiz/application/bloc/quiz_screen/quiz_screen_bloc.dart';
+import 'package:verbaquiz/domain/model/objects/answer.dart';
+
+
+part 'widgets/quiz_finished/quiz_finished.dart';
+part 'widgets/quiz_loaded/quiz_loaded.dart';
+part 'widgets/quiz_loaded/widgets/count_down_timer/count_down_timer.dart';
+part 'widgets/quiz_loaded/widgets/next_question_btn/next_question_btn.dart';
+part 'widgets/quiz_loaded/widgets/question_answers/question_answers.dart';
+part 'widgets/quiz_loaded/widgets/question_text/question_text.dart';
+part 'widgets/quiz_loaded/widgets/questions_counter/questions_counter.dart';
 
 class QuizScreen extends StatefulWidget {
   static const String routeName = '/Quiz';
@@ -18,9 +28,6 @@ class QuizScreen extends StatefulWidget {
 
 class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
   final QuizScreenBloc _quizScreenBloc = GetIt.instance.get<QuizScreenBloc>();
-  final QuestionBloc _questionBloc = GetIt.instance.get<QuestionBloc>();
-
-  final CountDownController _controller = CountDownController();
 
   @override
   void initState() {
@@ -97,116 +104,9 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
                   child: Text('Loading...'),
                 );
               } else if (quizScreenState is QuizScreenQuizLoaded) {
-                return BlocBuilder<QuestionBloc, QuestionState>(
-                  bloc: _questionBloc,
-                  builder: (context, questionState) {
-                    if (questionState is QuestionLoaded) {
-                      return Column(
-                        children: [
-                          Center(
-                            child: arguments != null && arguments.hasCountdown
-                                ? CircularCountDownTimer(
-                                    duration: 10,
-                                    initialDuration: 1,
-                                    controller: _controller,
-                                    width: 150,
-                                    height: 150,
-                                    ringColor: Colors.grey[300]!,
-                                    ringGradient: null,
-                                    fillColor: Colors.purpleAccent[100]!,
-                                    fillGradient: null,
-                                    backgroundColor: Colors.purple[500],
-                                    backgroundGradient: null,
-                                    strokeWidth: 10.0,
-                                    strokeCap: StrokeCap.round,
-                                    isReverse: false,
-                                    isReverseAnimation: false,
-                                    isTimerTextShown: true,
-                                    autoStart: true,
-                                    onStart: () {
-                                      debugPrint('Countdown Started');
-                                    },
-                                    onComplete: () => _questionBloc.add(const LoadCorrectAnswer()),
-                                    onChange: (String timeStamp) {
-                                      debugPrint('Countdown Changed $timeStamp');
-                                    },
-                                    timeFormatterFunction: (defaultFormatterFunction, duration) {
-                                      if (duration.inSeconds == 0) {
-                                        return "Start";
-                                      } else {
-                                        return Function.apply(defaultFormatterFunction, [duration]);
-                                      }
-                                    },
-                                  )
-                                : const SizedBox.shrink(),
-                          ),
-                          const SizedBox(height: 50),
-                          Center(
-                            child: Text(
-                                '${_quizScreenBloc.currentQuestion + 1} / ${_quizScreenBloc.quiz?.questions.length}'),
-                          ),
-                          const SizedBox(height: 50),
-                          Center(
-                            child: Text(questionState.question.text),
-                          ),
-                          const SizedBox(height: 50),
-                          ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemCount: questionState.question.answers.length,
-                            itemBuilder: (context, i) {
-                              if (questionState is CorrectQuestionLoaded) {
-                                return Text(
-                                  questionState.question.answers[i].text,
-                                  style: TextStyle(
-                                    color: (questionState.correctAnswer == questionState.question.answers[i])
-                                        ? Colors.green
-                                        : (questionState.answerSelected == questionState.question.answers[i])
-                                            ? Colors.red
-                                            : Colors.black,
-                                  ),
-                                );
-                              } else {
-                                return TextButton(
-                                  onPressed: () {
-                                    _controller.pause();
-                                    _questionBloc.add(
-                                      LoadCorrectAnswer(
-                                        answerSelected: questionState.question.answers[i],
-                                      ),
-                                    );
-                                  },
-                                  child: Text(
-                                    questionState.question.answers[i].text,
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                );
-                              }
-                            },
-                          ),
-                          const SizedBox(height: 50),
-                          questionState is CorrectQuestionLoaded
-                              ? TextButton(
-                                  onPressed: () {
-                                    _quizScreenBloc.add(const QuizScreenEventLoadNextQuestion());
-                                    _controller.reset();
-                                    _controller.start();
-                                  },
-                                  child: const Text('Go Next'),
-                                )
-                              : const SizedBox.shrink(),
-                        ],
-                      );
-                    }
-                    return const SizedBox.shrink();
-                  },
-                );
+                return QuizLoaded(hasCountDown: arguments?.hasCountDown ?? false);
               } else if (quizScreenState is QuizScreenQuizFinished) {
-                return const Center(
-                  child: Text('Finished?'),
-                );
+                return const QuizFinished();
               }
 
               return const SizedBox.shrink();
@@ -219,9 +119,9 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
 }
 
 class QuizScreenArguments {
-  final bool hasCountdown;
+  final bool hasCountDown;
 
   const QuizScreenArguments({
-    this.hasCountdown = false,
+    this.hasCountDown = false,
   });
 }
