@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
             onPressed: () => Navigator.of(context).pushNamed(
               QuizScreen.routeName,
               arguments: const QuizScreenArguments(
-                hasCountdown: true,
+                hasCountDown: true,
               ),
             ),
             child: const Text('Quiz con timer'),

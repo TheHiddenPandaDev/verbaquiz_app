@@ -36,6 +36,16 @@ class QuestionBloc extends Bloc<QuestionScreenEvent, QuestionState> {
       return;
     }
 
+    if(event.answerSelected != null) {
+      question = Question(
+        id: question!.id,
+        text: question!.text,
+        answers: question!.answers,
+        correctAnswer: question!.correctAnswer,
+        userAnswer: event.answerSelected,
+      );
+    }
+
     emit(CorrectQuestionLoaded(
       question: question!,
       correctAnswer: question!.correctAnswer,

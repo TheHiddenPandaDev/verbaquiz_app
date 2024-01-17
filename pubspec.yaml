@@ -18,6 +18,8 @@ dependencies:
   injectable: ^2.1.2
   page_transition: ^2.0.9
   circular_countdown_timer: ^0.2.3
+  intl: ^0.18.1
+  hive: ^2.2.3
 
 dev_dependencies:
   bloc_test: ^9.1.3

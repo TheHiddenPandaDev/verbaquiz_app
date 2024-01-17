@@ -28,5 +28,6 @@ class QuizScreenQuizLoaded extends QuizScreenStarted {
 }
 
 class QuizScreenQuizFinished extends QuizScreenStarted   {
-  const QuizScreenQuizFinished();
+  final Quiz quiz;
+  const QuizScreenQuizFinished(this.quiz);
 }

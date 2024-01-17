@@ -1,6 +1,6 @@
 import 'package:verbaquiz/domain/model/objects/question.dart';
 
-abstract class QuestionApiRepository {
+abstract class QuestionRepository {
   Future<List<Question>> readAll();
   Future<List<Question>> readFemaleQuestions();
   Future<List<Question>> readMaleQuestions();

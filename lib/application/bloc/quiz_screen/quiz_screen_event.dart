@@ -12,7 +12,16 @@ class QuizScreenEventLoadQuiz extends QuizScreenEvent {
 }
 
 class QuizScreenEventLoadNextQuestion extends QuizScreenEvent {
-  const QuizScreenEventLoadNextQuestion();
+  final Answer? userAnswer;
+
+  const QuizScreenEventLoadNextQuestion({
+    this.userAnswer,
+  });
+
+  @override
+  List<Object?> get props => [
+        userAnswer,
+      ];
 }
 
 class QuizScreenEventResetQuiz extends QuizScreenEvent {
