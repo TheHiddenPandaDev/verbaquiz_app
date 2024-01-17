@@ -48,6 +48,9 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
         case AppLifecycleState.resumed:
           debugPrint('resumed');
           break;
+        case AppLifecycleState.hidden:
+          debugPrint('hidden');
+          break;
       }
     }
   }
@@ -67,6 +70,9 @@ class _QuizScreenState extends State<QuizScreen> with WidgetsBindingObserver {
           break;
         case AppLifecycleState.resumed:
           debugPrint('resumed');
+          break;
+        case AppLifecycleState.hidden:
+          debugPrint('hidden');
           break;
       }
     }
